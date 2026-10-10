@@ -1,0 +1,27 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: eisan196305
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: product-page
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: product-page-app
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  architecture: arm64
+  # Uncomment to easily set up a custom domain. Read the docs for more details:
+  # https://www.serverless.com/framework/docs/providers/aws/guide/domains
+  # domain: api.example.com
+  timeout: 10
+  environment:
+    DETAILS_BASE_URL: https://2jzj51tlcb.execute-api.us-east-1.amazonaws.com
+    REVIEWS_BASE_URL: https://g2g6cxl309.execute-api.us-east-1.amazonaws.com
+    REVIEWS_WEIGHTS: '{"v1":34,"v2":33,"v3":33}'
+
+functions:
+  productpage:
+    handler: handler.productpage
+    events:
+      - httpApi:
+          path: /productpage
+          method: get
